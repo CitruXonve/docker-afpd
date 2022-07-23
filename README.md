@@ -20,11 +20,15 @@ username:<password hash>
 username:<password hash>
 ```
 
-Password hashes can be created with ```mkpasswd```.
+Password hashes can be created with ```openssl```.
+
+```
+cat <raw_passwd_file> | openssl passwd -1 -stdin >> <encrypted_passwd_file>
+```
 
 ## Configuring Shares
 
-Shares can be configured by mounting an afpd.conf file into ```/usr/local/etc/afp.conf```.
+Shares can be configured by mounting an afpd.conf file into ```/etc/afp.conf```.
 
 Documentation for the afpd.conf can be found in [Netatalk's documentation](http://netatalk.sourceforge.net/3.0/htmldocs/afp.conf.5.html).
 
@@ -35,8 +39,11 @@ Ports 548 is exposed and should be mounted to the host ports
 ## Example
 
 ```
-    docker run --detach
-               -v /path/to/local/afpd.conf:/usr/local/etc/afp.conf
-               -p 548:548
-               nrwiersma/docker-afpd:latest
+    docker run --detach \
+                -v <name_list_file>:/names \
+                -v <user_list_file>:/users \
+                -v /path/to/local/afpd.conf:/etc/afp.conf
+                -v /path/to/shared/volume:/media
+                -p 548:548
+                docker-afpd:latest
 ```
