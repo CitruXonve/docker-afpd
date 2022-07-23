@@ -28,7 +28,14 @@ cat <raw_passwd_file> | openssl passwd -1 -stdin >> <encrypted_passwd_file>
 
 ## Configuring Shares
 
-Shares can be configured by mounting an afpd.conf file into ```/etc/afp.conf```.
+Shares can be configured by mounting an afpd.conf file into ```/etc/afp.conf```:
+
+```
+[Shared]
+path = /media
+valid users = linux_user
+time machine = yes
+```
 
 Documentation for the afpd.conf can be found in [Netatalk's documentation](http://netatalk.sourceforge.net/3.0/htmldocs/afp.conf.5.html).
 
